@@ -80,7 +80,7 @@ public class CategoryController {
             redirectAttributes.addFlashAttribute("category", category);
 
             // Redirect back to the form
-            return String.format("redirect:/categories/%s/edit", category.getId());
+            return String.format("redirect:/categories/%d/edit", category.getId());
         }
         categoryService.save(category);
 
@@ -116,10 +116,21 @@ public class CategoryController {
 
     // Delete an existing category
     @RequestMapping(value = "/categories/{categoryId}/delete", method = RequestMethod.POST)
-    public String deleteCategory(@PathVariable Long categoryId) {
-        // TODO: Delete category if it contains no GIFs
+    public String deleteCategory(@PathVariable Long categoryId, RedirectAttributes redirectAttributes) {
 
-        // TODO: Redirect browser to /categories
-        return null;
+        Category category = categoryService.findById(categoryId);
+
+        // Delete category if it contains no GIFs
+        if (category.getGifs().size() > 0) {
+            redirectAttributes.addFlashAttribute("flash",
+                    new FlashMessage("Only empty categories can be deleted.", FlashMessage.Status.FAILURE));
+            return String.format("redirect:/categories/%d/edit", categoryId);
+        }
+        categoryService.delete(category);
+        redirectAttributes.addFlashAttribute("flash",
+                new FlashMessage("Category deleted!", FlashMessage.Status.SUCCESS));
+
+        // Redirect browser to /categories
+        return "redirect:/categories";
     }
 }
