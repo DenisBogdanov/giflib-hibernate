@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="head(page_title)" lang="en">
     <meta charset="UTF-8"/>
     <meta description="viewport" content="width=device-width, initial-scale=1"/>
 
-    <link rel="icon" th:href="@{/favicon.png}" />
+    <link rel="icon" th:href="@{/favicon.png}"/>
 
-    <link rel="stylesheet" th:href="@{/vendor/materialize/css/materialize.css}" />
-    <link rel="stylesheet" th:href="@{/vendor/codrops/css/cs-select.css}" />
-    <link rel="stylesheet" th:href="@{/vendor/codrops/css/cs-skin-border.css}" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    <link rel="stylesheet" th:href="@{/app.css}" />
+    <link rel="stylesheet" th:href="@{/vendor/materialize/css/materialize.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/codrops/css/cs-select.css}"/>
+    <link rel="stylesheet" th:href="@{/vendor/codrops/css/cs-skin-border.css}"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" th:href="@{/app.css}"/>
 
     <title th:text="'giflib | ' + ${page_title}">giflib</title>
 </head>
@@ -24,16 +24,24 @@
             <a th:href="@{/}" class="brand-logo">gif<span>.</span>lib</a>
             <a href="#" data-activates="mobile-nav" class="button-collapse right"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li th:classappend="${#httpServletRequest.servletPath.equals('/upload') ? 'active' : ''}"><a th:href="@{/upload}">Upload</a></li>
-                <li th:classappend="${#httpServletRequest.servletPath.equals('/') ? 'active' : ''}"><a th:href="@{/}">Explore</a></li>
-                <li th:classappend="${#httpServletRequest.servletPath.equals('/categories') ? 'active' : ''}"><a th:href="@{/categories}">Categories</a></li>
-                <li th:classappend="${#httpServletRequest.servletPath.equals('/favorites') ? 'active' : ''}"><a th:href="@{/favorites}">Favorites</a></li>
+                <li th:classappend="${#httpServletRequest.servletPath.equals('/upload') ? 'active' : ''}"><a
+                        th:href="@{/upload}">Upload</a></li>
+                <li th:classappend="${#httpServletRequest.servletPath.equals('/') ? 'active' : ''}"><a th:href="@{/}">Explore</a>
+                </li>
+                <li th:classappend="${#httpServletRequest.servletPath.equals('/categories') ? 'active' : ''}"><a
+                        th:href="@{/categories}">Categories</a></li>
+                <li th:classappend="${#httpServletRequest.servletPath.equals('/favorites') ? 'active' : ''}"><a
+                        th:href="@{/favorites}">Favorites</a></li>
             </ul>
             <ul id="mobile-nav" class="side-nav">
-                <li th:classappend="${#httpServletRequest.servletPath.equals('/upload') ? 'active' : ''}"><a th:href="@{/upload}">Upload</a></li>
-                <li th:classappend="${#httpServletRequest.servletPath.equals('/') ? 'active' : ''}"><a th:href="@{/}">Explore</a></li>
-                <li th:classappend="${#httpServletRequest.servletPath.equals('/categories') ? 'active' : ''}"><a th:href="@{/categories}">Categories</a></li>
-                <li th:classappend="${#httpServletRequest.servletPath.equals('/favorites') ? 'active' : ''}"><a th:href="@{/favorites}">Favorites</a></li>
+                <li th:classappend="${#httpServletRequest.servletPath.equals('/upload') ? 'active' : ''}"><a
+                        th:href="@{/upload}">Upload</a></li>
+                <li th:classappend="${#httpServletRequest.servletPath.equals('/') ? 'active' : ''}"><a th:href="@{/}">Explore</a>
+                </li>
+                <li th:classappend="${#httpServletRequest.servletPath.equals('/categories') ? 'active' : ''}"><a
+                        th:href="@{/categories}">Categories</a></li>
+                <li th:classappend="${#httpServletRequest.servletPath.equals('/favorites') ? 'active' : ''}"><a
+                        th:href="@{/favorites}">Favorites</a></li>
             </ul>
         </div>
     </nav>
@@ -44,7 +52,8 @@
         <div class="col s12">
             <form th:action="@{/search}" method="get">
                 <div class="input-field">
-                    <input name="q" type="search" placeholder="Search all gifs..." required="required" autocomplete="off"/>
+                    <input name="q" type="search" placeholder="Search all gifs..." required="required"
+                           autocomplete="off"/>
                     <i class="material-icons">search</i>
                 </div>
             </form>
