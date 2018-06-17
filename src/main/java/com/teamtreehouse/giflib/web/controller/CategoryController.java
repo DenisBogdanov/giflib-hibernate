@@ -6,9 +6,12 @@ import com.teamtreehouse.giflib.web.Color;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.validation.Valid;
 
 @Controller
 public class CategoryController {
@@ -62,11 +65,16 @@ public class CategoryController {
 
     // Add a category
     @RequestMapping(value = "/categories", method = RequestMethod.POST)
-    public String addCategory(Category category) {
+    public String addCategory(@Valid Category category, BindingResult result) {
         // Add category if valid data was received
+        if (result.hasErrors()) {
+            // Redirect back to the form
+            return "redirect:/categories/add";
+        }
+
         categoryService.save(category);
 
-        // TODO: Redirect browser to /categories
+        // Redirect browser to /categories
         return "redirect:/categories";
     }
 
