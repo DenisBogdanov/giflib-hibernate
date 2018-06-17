@@ -38,7 +38,10 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public Category findById(Long id) {
-        return null;
+        Session session = sessionFactory.openSession();
+        Category category = session.get(Category.class, id);
+        session.close();
+        return category;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class CategoryDaoImpl implements CategoryDao {
         session.beginTransaction();
 
         // Save the category
-        session.save(category);
+        session.saveOrUpdate(category);
 
         // Commit the transaction
         session.getTransaction().commit();
