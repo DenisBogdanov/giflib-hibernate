@@ -11,7 +11,7 @@ import java.util.List;
  * Denis, 17.06.2018
  */
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     CategoryDao categoryDao;
@@ -28,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public void save(Category category) {
-
+        categoryDao.save(category);
     }
 
     @Override
