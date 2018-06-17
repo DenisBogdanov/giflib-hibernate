@@ -26,8 +26,8 @@ public class GifController {
     // Home page - index of all GIFs
     @RequestMapping("/")
     public String listGifs(Model model) {
-        // TODO: Get all gifs
-        List<Gif> gifs = new ArrayList<>();
+        // Get all gifs
+        List<Gif> gifs = gifService.findAll();
 
         model.addAttribute("gifs", gifs);
         return "gif/index";
@@ -80,27 +80,44 @@ public class GifController {
     @RequestMapping("/upload")
     public String formNewGif(Model model) {
         // Add model attributes needed for new GIF upload form
-        model.addAttribute("gif", new Gif());
+        if (!model.containsAttribute("gif")) {
+            model.addAttribute("gif", new Gif());
+        }
         model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("action", "/gifs");
+        model.addAttribute("heading", "Upload");
+        model.addAttribute("submit", "Add");
 
         return "gif/form";
     }
 
     // Form for editing an existing GIF
-    @RequestMapping(value = "/gifs/{dgifI}/edit")
+    @RequestMapping(value = "/gifs/{gifId}/edit")
     public String formEditGif(@PathVariable Long gifId, Model model) {
-        // TODO: Add model attributes needed for edit form
+        // Add model attributes needed for edit form
+        if (!model.containsAttribute("gif")) {
+            model.addAttribute("gif", gifService.findById(gifId));
+        }
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("action", "/gifs/" + gifId);
+        model.addAttribute("heading", "Edit");
+        model.addAttribute("submit", "Update");
 
         return "gif/form";
     }
 
     // Update an existing GIF
     @RequestMapping(value = "/gifs/{gifId}", method = RequestMethod.POST)
-    public String updateGif() {
-        // TODO: Update GIF if data is valid
+    public String updateGif(Gif gif, @RequestParam MultipartFile file, RedirectAttributes redirectAttributes) {
+        // Update GIF if data is valid
+        gifService.save(gif, file);
 
-        // TODO: Redirect browser to updated GIF's detail view
-        return null;
+        // Flash message
+        redirectAttributes.addFlashAttribute("flash",
+                new FlashMessage("GIF successfully updated!", FlashMessage.Status.SUCCESS));
+
+        // Redirect browser to updated GIF's detail view
+        return "redirect:/gifs/" + gif.getId();
     }
 
     // Delete an existing GIF
