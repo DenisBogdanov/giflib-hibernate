@@ -12,3 +12,6 @@
 !h2*.jar
 *.war
 *.ear
+
+# H2 database file
+/data/

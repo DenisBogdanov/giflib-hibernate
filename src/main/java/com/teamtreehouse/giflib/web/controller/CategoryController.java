@@ -36,7 +36,7 @@ public class CategoryController {
 
         session.close();
 
-        model.addAttribute("categories",categories);
+        model.addAttribute("categories", categories);
         return "category/index";
     }
 
